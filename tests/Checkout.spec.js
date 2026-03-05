@@ -1,7 +1,11 @@
 import { test, expect } from "@playwright/test";
 import fs from "fs";
+import { waitUtils} from "../utils/waitUtils";
+
 
 test.describe("TS_01 ", () => {
+
+   const waitObj = new waitUtils();
   test("TC_01 Validate the end-to-end checkout.", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
@@ -124,9 +128,11 @@ test.describe("TS_01 ", () => {
       name: "Click To Download Order Details in CSV",
     });
 
+    // by using the method of the waitUtil
+    await waitObj.waitForElementVisible(downloadBtn);
+
     const [download] = await Promise.all([
       page.waitForEvent("download",
-        {delay:100}
       ),
       downloadBtn.click(),
     ]);
