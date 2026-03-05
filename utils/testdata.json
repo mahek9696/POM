@@ -1,1 +1,5 @@
-  { "email": "email@example.com", "password": "password" }  
+ [
+  { "scenario":"Valid","email": "email@example.com", "password": "password" },
+  { "scenario":"Empty","email": "", "password": "" },
+  { "scenario":"Invalid","email": "email@example.comm", "password": "passwordd" }
+ ]  

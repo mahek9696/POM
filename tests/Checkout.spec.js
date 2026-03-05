@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import fs from "fs";
 
 test.describe("TS_01 ", () => {
   test("TC_01 Validate the end-to-end checkout.", async ({ page }) => {
@@ -46,7 +47,6 @@ test.describe("TS_01 ", () => {
 
       // 2. Now you can safely use .split() on the string
       const priceValue = parseInt(rawPrice.split(" ")[1]);
-      
 
       console.log(priceValue); // Output: 11500
 
@@ -71,19 +71,100 @@ test.describe("TS_01 ", () => {
     const cartTotal = await page
       .getByRole("listitem")
       .locator(".value")
-      .first().textContent();
+      .first()
+      .textContent();
 
     // 2. Now perform the string manipulation
     // const cartTotalValue = parseInt(cartTotal.split("$")[1]);
-    const cartTotalValue = parseInt(cartTotal.replace("$",""));
+    const cartTotalValue = parseInt(cartTotal.replace("$", ""));
 
     console.log(cartTotalValue); // This will now correctly output the number
 
     console.log(cartTotalValue === total);
 
-    await page.getByRole('button',{name:'Checkout'}).click();
-    
+    await page.getByRole("button", { name: "Checkout" }).click();
+    await expect(page).toHaveURL(/.*\/client\/#\/dashboard\/order.*/);
 
-    
+    //order detail page
+
+    //card details
+
+    //card no, expire date are prefilled
+
+    await page.getByText(/CVV Code /i).click();
+    await page.keyboard.press("Tab");
+    await page.keyboard.type("123");
+
+    await page.getByText(/Name on Card/i).click();
+    await page.keyboard.press("Tab");
+    await page.keyboard.type("Test Example");
+
+    await page
+      .getByText(/Apply Coupon/i)
+      .first()
+      .click();
+    await page.keyboard.press("Tab");
+    await page.keyboard.type("rahulshettyacademy");
+
+    await page.getByRole("button", { name: "Apply Coupon" }).click();
+    await expect(page.getByText("* Coupon Applied")).toBeVisible();
+
+    //Shipping addresss
+
+    await page
+      .getByPlaceholder("Select Country")
+      .pressSequentially("ind", { delay: 100 });
+    await page.getByText("India", { exact: true }).click();
+
+    await page.getByText("Place Order ").click();
+    await expect(page).toHaveURL(/.*\/client\/#\/dashboard\/thanks.*/);
+
+    // file download page.
+    const downloadBtn = page.getByRole("button", {
+      name: "Click To Download Order Details in CSV",
+    });
+
+    const [download] = await Promise.all([
+      page.waitForEvent("download",
+        {delay:100}
+      ),
+      downloadBtn.click(),
+    ]);
+
+    await download.saveAs("./downloads/order_details.csv");
+    expect(fs.existsSync("./downloads/order_details.csv")).toBeTruthy();
+
+    //getting the order from the thank you page.
+
+    // 1. Target only the labels containing the Order IDs
+    const idLocator = page.locator(".em-spacer-1 .ng-star-inserted");
+
+    // 2. Fetch all texts into an array at once (handles the loop for you)
+    const rawOrderIds = await idLocator.allInnerTexts();
+    console.log(rawOrderIds);
+
+    // 3. Clean the pipes (|) and extra spaces using map
+    const orderArr = rawOrderIds.map((id) => id.replace(/\|/g, "").trim().slice(1));
+    console.log(orderArr);
+
+    await page.getByText(" Orders History Page ").click();
+
+    await expect(page).toHaveURL(/.*\/client\/#\/dashboard\/myorders.*/);
+
+    // verfiy the order history
+
+    for(const id of orderArr)
+    {
+      const row = page.locator('tbody tr').filter({hasText : id});
+      // console.log(`${row} is founded ! `)
+
+      await expect(row.getByText(id)).toBeVisible();
+    }
+
+    //redirected back to home 
+    await page.getByRole('button',{name :'HOME'}).click();
+
+    await expect(page).toHaveURL(/.*\/client\/#\/dashboard.*/);
+
   });
 });

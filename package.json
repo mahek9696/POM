@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "login": "playwright test tests/login.spec.js",
-    "register": "playwright test tests/register.spec.js"
+    "register": "playwright test tests/register.spec.js",
+    "checkout": "playwright test tests/Checkout.spec.js"
   },
   "keywords": [],
   "author": "",
