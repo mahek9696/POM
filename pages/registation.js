@@ -37,7 +37,7 @@ export class RegistationPage {
     await this.phone.fill(phone);
     await this.occupation.selectOption(occupation);
 
-    if (gender == female) {
+    if (gender == "Female") {
       await this.gender.setChecked(true);
     } else {
       await this.gender.setChecked(false);

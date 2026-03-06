@@ -1,0 +1,39 @@
+[
+    {
+        "scenario": "Valid Data",
+        "firstName": "Mahek",
+        "lastName": "Patel",
+        "email": "mahek2.patel@mail.com",
+        "phone": "1234567890",
+        "occupation": "3: Engineer",
+        "gender": "female",
+        "password": "Password123!",
+        "confirmPassword": "Password123!",
+        "isAbove18": "true"
+    },
+    {
+        "scenario": "Empty Data",
+        "firstName": "",
+        "lastName": "",
+        "email": "",
+        "phone": "",
+        "occupation": "3: Engineer",
+        "gender": "female",
+        "password": "",
+        "confirmPassword": "",
+        "isAbove18": "true"
+    },
+    {
+        "scenario": "Duplicate Data",
+        "firstName": "Mahek",
+        "lastName": "Patel",
+        "email": "mahek2.patel@mail.com",
+        "phone": "1234567890",
+        "occupation": "3: Engineer",
+        "gender": "female",
+        "password": "Password123!",
+        "confirmPassword": "Password123!",
+        "isAbove18": "true"
+    }
+
+]
