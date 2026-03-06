@@ -1,13 +1,19 @@
-import { LoginPage } from '../pages/login';
+import { LoginPage } from "../pages/login";
+import { RegistationPage } from "../pages/registation";
 
 export class POManager {
   constructor(page) {
     this.page = page;
-    this.loginPage = new LoginPage(this.page);
+    this.login = new LoginPage(this.page);
+    this.registation = new RegistationPage(this.page);
   }
 
- getLoginPage() {
-    return this.loginPage;
+  getLoginPage() {
+    return this.login;
+  }
+
+  getRegistationPage() {
+    return this.registation;
   }
 }
 // module.exports = { POManager };
