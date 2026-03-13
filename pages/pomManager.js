@@ -1,6 +1,7 @@
 import { LoginPage } from "../pages/login";
 import { RegistationPage } from "../pages/registation";
-import { ProductListPage } from '../pages/productList';
+import { ProductListPage } from "../pages/productList";
+import { CartPage } from "../pages/cart";
 
 export class POManager {
   constructor(page) {
@@ -8,7 +9,7 @@ export class POManager {
     this.login = new LoginPage(this.page);
     this.registation = new RegistationPage(this.page);
     this.productList = new ProductListPage(this.page);
-
+    this.cart = new CartPage(this.page);
   }
 
   getLoginPage() {
@@ -19,9 +20,12 @@ export class POManager {
     return this.registation;
   }
 
-  getProductListPage()
-  {
+  getProductListPage() {
     return this.productList;
+  }
+
+  getCartPage() {
+    return this.cart;
   }
 }
 // module.exports = { POManager };

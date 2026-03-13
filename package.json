@@ -7,7 +7,8 @@
     "login": "playwright test tests/login.spec.js",
     "register": "playwright test tests/registation.spec.js",
     "checkout": "playwright test tests/Checkout.spec.js",
-    "dash" : "playwright test tests/dashboard.spec.js"
+    "dash": "playwright test tests/dashboard.spec.js",
+    "cart": "playwright test tests/endToEnd.spec.js"
   },
   "keywords": [],
   "author": "",

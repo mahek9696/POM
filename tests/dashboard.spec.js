@@ -13,8 +13,9 @@ test.describe("TS_Product List Page", () => {
     // console.log(await objList.getProductsData());
     // const list = await objList.getProductDataFor();
 
-    await objList.viewProductDetails('ZARA COAT 3');
-    
+    const cart = "ZARA COAT 3";
+    // await objList.viewProductDetails(cart);
+    await objList.addToCart(cart);
 
     // console.log(list);
   });
